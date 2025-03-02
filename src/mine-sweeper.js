@@ -23,9 +23,60 @@ const { NotImplementedError } = require('../extensions/index.js');
  *  [1, 1, 1]
  * ]
  */
-function minesweeper(/* matrix */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+function minesweeper(matrix) {
+  let rows = matrix.length;
+  let cols = matrix[0].length;
+  
+  // Initialize result matrix with zeros
+  let result = Array.from({ length: rows }, () => Array(cols).fill(0));
+for (let row = 0; row < matrix.length; row++) {
+    for (let col = 0; col < matrix[row].length; col++) {
+      if(matrix[row][col] === true){
+          result[row][col] = 1;
+          if(col !== matrix[row].length-1){
+              if(matrix[row][col+1] !== true){
+                  result[row][col+1] += 1;
+              }
+          }
+          if(col !== 0){
+              if(matrix[row][col-1]  !== true){
+                  result[row][col-1] += 1;
+              }
+          }
+          if(row !== matrix.length-1){
+              if(matrix[row+1][col]  !== true){
+                  result[row+1][col] += 1;
+              }
+              if(col !== 0){
+                  if(matrix[row+1][col-1] !== true){
+                      result[row+1][col-1] += 1;
+                  }
+              }
+              if(col !== matrix[row].length-1){
+                  if(matrix[row+1][col+1] !== true){
+                      result[row+1][col+1] += 1;
+                  }
+              }
+          } 
+          if(row !== 0){
+              if(matrix[row-1][col] !== true){
+                  result[row-1][col] += 1;
+              }
+              if(col !== 0){
+                  if(matrix[row-1][col-1] !== true){
+                      result[row-1][col-1] += 1;
+                  }
+              }
+              if(col !== matrix[row].length-1){
+                  if(matrix[row-1][col+1] !== true){
+                      result[row-1][col+1] += 1;
+                  }
+              }
+          } 
+      }
+    }
+}
+return result;
 }
 
 module.exports = {
